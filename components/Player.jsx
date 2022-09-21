@@ -1,55 +1,32 @@
-import React from 'react'
-import videojs from 'video.js'
+import React from "react";
 
-const Player = (props) => {
-
-  const videoRef = React.useRef(null);
-  const playerRef = React.useRef(null);
-  const { options, onReady } = props;
-
-  React.useEffect(() => {
-
-    // Make sure Video.js is only initialized just once
-    if (!playerRef.current) {
-      const videoElement = videoRef.current;
-
-      if (!videoElement) return;
-
-      const player = playerRef.current = videojs(videoElement, options, () => {
-        videojs.log('Player is ready');
-        onReady && onReady(player);
-      });
-      // You could update ean existing player in the `else` block here
-      // on prop change, for example:
-    } else {
-      // const player = playerRef.current;
-
-      // player.autoplay(options.autoplay);
-      // player.src(options.sources);
-    }
-  }, [options, videoRef]
-  );
-
-  // Dispose the Video.js player when the functional component unmounts
-  React.useEffect(() => {
-    const player = playerRef.current;
-
-    return () => {
-      if (player) {
-        player.dispose();
-        playerRef.current = null;
-      }
-    };
-  }, [playerRef]);
-
+const Player = () => {
   return (
-    <>
-      <h1>Video Player</h1>
-      <div data-vjs-player>
-        <video ref={videoRef} className='video-js vjs-big-play-contred' />
-      </div>
-    </>
-  )
-}
+    <div>
+      <h2 className="h-12 py-3 ">HTML5 Player</h2>
 
-export default Player
+      <figure id="videoContainer"></figure>
+
+      <video
+        className="border-8 border-gray-700 rounded-md"
+        id="video"
+        width=""
+        height=""
+        controls
+        preload="metadata"
+        poster="./images/poster.jpeg"
+      >
+        <source src="./video/sintel-short.mp4" type="video/mp4" />
+        <source src="./video/sintel-short.webm" type="video/webm" />
+        <a href="./video/sintel-short.mp4">Download MP4</a>
+        Your browser does not support the video tag.
+      </video>
+      <figcaption>
+        &copy; Blender Foundation |
+        <a href="http://mango.blender.org">mango.blender.org</a>
+      </figcaption>
+    </div>
+  );
+};
+
+export default Player;
